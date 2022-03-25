@@ -1,0 +1,41 @@
+{
+  "name": "next-js-router-transitions",
+  "version": "1.0.0",
+  "description": "Demo for router events transition hooks",
+  "scripts": {
+    "prepare": "npm run build",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "clean": "rimraf .next/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/calinalexandru/next-js-router-transitions.git"
+  },
+  "keywords": [
+    "nextjs",
+    "react"
+  ],
+  "author": "Alexandru Calin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/calinalexandru/next-js-router-transitions/issues"
+  },
+  "homepage": "https://github.com/calinalexandru/next-js-router-transitions#readme",
+  "dependencies": {
+    "@mui/material": "^5.5.2",
+    "next": "^12.1.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "eslint": "8.10.0",
+    "eslint-config-next": "12.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.29.3",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2"
+  }
+}
