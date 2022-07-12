@@ -2,23 +2,29 @@ import { useEffect, useState } from 'react';
 import usePerformanceTimers from './usePerformanceTimers';
 
 export default function useRouteTransition({ delay, idle }) {
-  const [buffering, setBuffering] = useState(idle);
+  let t;
+  const [transitionEnd, setTransitionEnd] = useState(false);
   const { getDuration, setStart, setEnd } = usePerformanceTimers();
 
   useEffect(() => {
-    if (!idle) setStart(performance.now());
-    else setEnd(performance.now());
-    const t = setTimeout(
-      () => {
-        setBuffering(idle);
-      },
-      idle ? delay - getDuration() : 0
-    );
+    if (!idle) {
+      setTransitionEnd(false);
+      setStart(performance.now());
+    } else {
+      setEnd(performance.now());
+      const processDuration = getDuration();
+      t = setTimeout(
+        () => {
+          setTransitionEnd(true);
+        },
+        delay > processDuration ? delay - processDuration : 0
+      );
+    }
 
     return () => {
       clearTimeout(t);
     };
-  }, [delay, idle, getDuration, setStart, setEnd]);
+  }, [idle, delay]);
 
-  return buffering;
+  return transitionEnd;
 }

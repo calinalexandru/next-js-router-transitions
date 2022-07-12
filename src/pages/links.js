@@ -1,3 +1,3 @@
 export default function LinksPage() {
-  return <p>here do some linking</p>;
+  return <p>Links from our friends &amp; foes</p>;
 }

@@ -1,3 +1,3 @@
 export default function BlogPage() {
-  return <p>here do some blogging</p>;
+  return <p>some blogging content</p>;
 }

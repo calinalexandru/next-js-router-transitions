@@ -1,44 +1,47 @@
 import Link from 'next/link';
 import React, { useState, useEffect, useMemo } from 'react';
-import { Box, Container, Grow } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import useRouteTransition from '@/hooks/useRouteTransition';
 import useRouterChange from '@/hooks/useRouterChange';
 import { Stack } from '@mui/material';
+import { Fade } from '@mui/material';
 
 export default function Layout({ children }) {
-  const [displayChildren, setDisplayChildren] = useState(children);
+  const [displayChildren, setDisplayChildren] = useState([]);
   const idle = useRouterChange();
   const transitionEnd = useRouteTransition({ delay: 1000, idle });
 
   useEffect(() => {
     if (transitionEnd) setDisplayChildren(children);
-  }, [transitionEnd]);
+  }, [setDisplayChildren, transitionEnd, children]);
 
-  const out = useMemo(
+  const pageBody = useMemo(
     () => (
-      <Container maxWidth="lg">
-        <Box
-          sx={{
-            flexFlow: 'column nowrap',
-          }}
-        >
-          <Box mt={10} mb={0}>
-            <h1>Page transitions with Next.js</h1>
-          </Box>
-        </Box>
-        <Stack spacing={2}>
-          <Link href="/">index</Link>
-          <Link href="/blog">blog</Link>
-          <Link href="/links">Links</Link>
-        </Stack>
-        <Grow in={transitionEnd} timeout={1000}>
-          <div>{children}</div>
-        </Grow>
-        <Box>Footer</Box>
-      </Container>
+      <Fade in={transitionEnd} timeout={1000}>
+        <div>{displayChildren}</div>
+      </Fade>
     ),
-    [idle, transitionEnd, displayChildren]
+    [transitionEnd, displayChildren]
   );
 
-  return out;
+  return (
+    <Container maxWidth="lg">
+      <Box
+        sx={{
+          flexFlow: 'column nowrap',
+        }}
+      >
+        <Box mt={10} mb={0}>
+          <h1>Page transitions with Next.js</h1>
+        </Box>
+      </Box>
+      <Stack direction={'row'} spacing={2}>
+        <Link href="/">index</Link>
+        <Link href="/blog">blog</Link>
+        <Link href="/links">Links</Link>
+      </Stack>
+      <Box sx={{ bgcolor: 'green', p: 2 }}>{pageBody}</Box>
+      <Box sx={{ bgcolor: 'darkblue', p: 2 }}>Footer</Box>
+    </Container>
+  );
 }
