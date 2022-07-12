@@ -1,28 +1,20 @@
 {
   "env": {
-    "browser": true,
+    "node": true,
     "es2021": true
   },
-  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "parser": "@babel/eslint-parser",
-  "plugins": ["react", "import"],
-  "rules": {
-    "import/no-unresolved": [2, { "caseSensitive": false }],
-    "no-console": "off"
-  },
+  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
   "settings": {
-    "import/resolver": {
-      "alias": {
-        "map": [["@", "./src"]],
-        "extensions": [".jsx", ".js", ".json"]
-      }
+    "react": {
+      "version": "detect"
     }
+  },
+  "rules": {
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off" // nextjs
   }
 }

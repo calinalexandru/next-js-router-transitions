@@ -1,5 +1,5 @@
-let start = undefined;
-let end = undefined;
+let start;
+let end;
 export default function usePerformanceTimers() {
   function setStart(time) {
     start = time;
