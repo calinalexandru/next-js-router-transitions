@@ -1,19 +1,14 @@
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
 import { Box, Container } from '@mui/material';
-import useRouteTransition from '@/hooks/useRouteTransition';
-import useRouterChange from '@/hooks/useRouterChange';
 import { Stack } from '@mui/material';
 import { Fade } from '@mui/material';
+import useSimpleRouteTransition from '@/hooks/useSimpleRouteTransition';
 
 export default function Layout({ children }) {
-  const [displayChildren, setDisplayChildren] = useState(children);
-  const idle = useRouterChange();
-  const transitionEnd = useRouteTransition({ delay: 1000, idle });
-
-  useEffect(() => {
-    if (transitionEnd) setDisplayChildren(children);
-  }, [setDisplayChildren, transitionEnd, children]);
+  const { transitionEnd, displayChildren } = useSimpleRouteTransition({
+    delay: 1000,
+    children,
+  });
 
   return (
     <Container maxWidth="lg">
