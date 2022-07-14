@@ -1,12 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import usePerformanceTimers from './usePerformanceTimers';
 
 export default function useRouteTransition({ delay, idle }) {
-  let t;
+  const delayRef = useRef(delay);
   const [transitionEnd, setTransitionEnd] = useState(false);
   const { getDuration, setStart, setEnd } = usePerformanceTimers();
 
   useEffect(() => {
+    delayRef.current = delay;
+  }, [delay]);
+
+  useEffect(() => {
+    let t;
     if (!idle) {
       setTransitionEnd(false);
       setStart(performance.now());
@@ -17,14 +22,16 @@ export default function useRouteTransition({ delay, idle }) {
         () => {
           setTransitionEnd(true);
         },
-        delay > processDuration ? delay - processDuration : 0
+        delayRef.current > processDuration
+          ? delayRef.current - processDuration
+          : 0
       );
     }
 
     return () => {
       clearTimeout(t);
     };
-  }, [idle, delay]);
+  }, [idle]);
 
   return transitionEnd;
 }
